@@ -1,4 +1,4 @@
-package de.art.examples.mc.springcloud.config;
+package de.art.examples.mc.springcloud.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
     public static void main(String[] args) {
-        log.info("Starting spring cloud config client");
+        log.info("Starting spring cloud client");
         SpringApplication.run(Main.class, args);
     }
 }

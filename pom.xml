@@ -10,6 +10,6 @@
 
     <modules>
         <module>config-server</module>
-        <module>config-client</module>
+        <module>client</module>
     </modules>
 </project>

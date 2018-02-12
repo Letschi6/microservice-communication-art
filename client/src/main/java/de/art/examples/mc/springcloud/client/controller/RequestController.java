@@ -44,6 +44,7 @@ public class RequestController {
         if (list != null && list.size() > 0) {
             URI uri = list.get(0).getUri();
             if (uri != null) {
+                log.info("Request service: " + service + " with uri: " + uri.toString());
                 return (new RestTemplate()).getForObject(uri, String.class);
             }
         }

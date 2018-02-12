@@ -9,4 +9,6 @@ java -Dspring.application.name=eureka-tertiary -jar eureka-server/target/eureka-
 sleep 30
 java -Dspring.application.name=eureka-client-operand -jar client/target/client-1.0.0-SNAPSHOT.jar &
 java -Dspring.application.name=eureka-client-operator -jar client/target/client-1.0.0-SNAPSHOT.jar &
+sleep 30
+java -Dspring.application.name=eureka-client-root -jar client/target/client-1.0.0-SNAPSHOT.jar &
 read -p "Press enter to continue"

@@ -1,4 +1,4 @@
-package de.art.examples.mc.springcloud.eureka.controller;
+package de.art.examples.mc.springcloud.client.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

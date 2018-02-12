@@ -1,4 +1,4 @@
-package de.art.examples.mc.springcloud.eureka.controller;
+package de.art.examples.mc.springcloud.client.controller;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;

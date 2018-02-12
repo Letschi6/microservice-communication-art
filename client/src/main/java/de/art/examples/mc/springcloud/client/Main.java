@@ -1,4 +1,4 @@
-package de.art.examples.mc.springcloud.eureka;
+package de.art.examples.mc.springcloud.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

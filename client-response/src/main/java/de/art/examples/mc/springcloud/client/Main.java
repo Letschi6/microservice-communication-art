@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        log.info("Starting spring cloud client");
+        log.info("Starting spring cloud response client");
         SpringApplication.run(Main.class, args);
     }
 }

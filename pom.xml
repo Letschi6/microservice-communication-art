@@ -11,7 +11,8 @@
     <modules>
         <module>config-server</module>
         <module>eureka-server</module>
-        <module>client</module>
+        <module>client-request</module>
+        <module>client-response</module>
     </modules>
 
 

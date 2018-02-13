@@ -2,7 +2,7 @@
 mvn clean package
 trap 'kill $(jobs -p)' SIGINT
 java -jar config-server/target/config-server-1.0.0-SNAPSHOT.jar &
-sleep 5
+sleep 15
 java -Dspring.application.name=eureka-primary -jar eureka-server/target/eureka-server-1.0.0-SNAPSHOT.jar &
 java -Dspring.application.name=eureka-secondary -jar eureka-server/target/eureka-server-1.0.0-SNAPSHOT.jar &
 java -Dspring.application.name=eureka-tertiary -jar eureka-server/target/eureka-server-1.0.0-SNAPSHOT.jar &

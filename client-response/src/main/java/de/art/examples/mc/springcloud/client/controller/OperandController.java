@@ -1,5 +1,6 @@
 package de.art.examples.mc.springcloud.client.controller;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 @Profile("!operator")
+@RefreshScope
 public class OperandController {
     @GetMapping("/")
     public @ResponseBody String getOperand() {

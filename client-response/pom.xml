@@ -14,6 +14,7 @@
         <java.version>1.8</java.version>
         <spring.version>1.5.10.RELEASE</spring.version>
         <spring-cloud.version>Edgware.SR1</spring-cloud.version>
+        <swagger.version>2.7.0</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -58,6 +59,21 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Rest Dependencies-->
+        <!-- Swagger Reachable at http://localhost:8080/swagger-ui.html and http://localhost:8080/v2/api-docs.
+        Generate sources with swagger-codegen. Downloadable from wget https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/2.2.1/swagger-codegen-cli-2.2.1.jar.
+        Call on CLI: java -jar swagger-codegen-cli-2.2.1.jar generate -l java -i http://localhost:8080/v2/api-docs-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
 

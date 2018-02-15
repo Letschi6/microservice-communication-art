@@ -11,6 +11,7 @@
     <modules>
         <module>config-server</module>
         <module>eureka-server</module>
+        <module>zuul-server</module>
         <module>turbine-server</module>
         <module>client-request</module>
         <module>client-response</module>

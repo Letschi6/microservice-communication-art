@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by redmann on 08.04.16.
  */
 
-@SpringBootApplication()
+@SpringBootApplication
 @Slf4j
 public class Main {
 

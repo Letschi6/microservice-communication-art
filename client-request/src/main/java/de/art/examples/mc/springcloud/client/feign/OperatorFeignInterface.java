@@ -6,5 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient("EUREKA-CLIENT-OPERATOR")
 public interface OperatorFeignInterface {
     @GetMapping("/")
+    //@RequestMapping(value = "/", method = RequestMethod.GET)
     String getOperation();
 }

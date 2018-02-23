@@ -10,7 +10,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
  * Created by redmann on 08.04.16.
  */
 
-@SpringBootApplication()
+@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
 @Slf4j

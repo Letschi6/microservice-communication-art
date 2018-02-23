@@ -9,7 +9,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * Created by redmann on 08.04.16.
  */
 
-@SpringBootApplication()
+@SpringBootApplication
 @EnableConfigServer
 @Slf4j
 public class Main {

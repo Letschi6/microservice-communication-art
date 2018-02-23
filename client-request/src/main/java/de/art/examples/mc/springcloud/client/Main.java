@@ -13,7 +13,7 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
  * Created by redmann on 08.04.16.
  */
 
-@SpringBootApplication()
+@SpringBootApplication
 @EnableCircuitBreaker
 @EnableDiscoveryClient
 @EnableFeignClients

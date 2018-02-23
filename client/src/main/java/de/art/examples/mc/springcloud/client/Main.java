@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * Created by redmann on 08.04.16.
  */
 
-@SpringBootApplication()
+@SpringBootApplication
 @EnableDiscoveryClient
 @Slf4j
 public class Main {

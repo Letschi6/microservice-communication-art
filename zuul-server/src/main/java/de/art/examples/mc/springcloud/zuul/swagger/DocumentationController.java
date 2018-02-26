@@ -3,6 +3,7 @@ package de.art.examples.mc.springcloud.zuul.swagger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import springfox.documentation.swagger.web.SwaggerResource;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Component
 @Primary
+@RefreshScope
 public class DocumentationController implements SwaggerResourcesProvider {
     private final DiscoveryClient discoveryClient;
 

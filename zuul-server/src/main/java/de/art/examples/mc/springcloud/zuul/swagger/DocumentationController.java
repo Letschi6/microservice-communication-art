@@ -1,6 +1,7 @@
 package de.art.examples.mc.springcloud.zuul.swagger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ import java.util.List;
 public class DocumentationController implements SwaggerResourcesProvider {
     private final DiscoveryClient discoveryClient;
 
+    @Value("${zuul.prefix}")
+    private String zuulPrefix;
+
     @Autowired
     public DocumentationController(DiscoveryClient discoveryClient) {
         this.discoveryClient = discoveryClient;
@@ -26,7 +30,7 @@ public class DocumentationController implements SwaggerResourcesProvider {
         Collections.sort(services);
         final List<SwaggerResource> resources = new ArrayList<SwaggerResource>();
         for (String service : services) {
-            resources.add(swaggerResource(service, "/" + service + "/v2/api-docs"));
+            resources.add(swaggerResource(service, zuulPrefix + "/" + service + "/v2/api-docs"));
         }
         return resources;
     }

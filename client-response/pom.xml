@@ -56,11 +56,6 @@
             <artifactId>spring-boot-actuator</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
         <!-- Rest Dependencies-->
         <!-- Swagger Reachable at http://localhost:8080/swagger-ui.html and http://localhost:8080/v2/api-docs.
         Generate sources with swagger-codegen. Downloadable from wget https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/2.2.1/swagger-codegen-cli-2.2.1.jar.

@@ -1,6 +1,7 @@
 package de.art.examples.mc.springcloud.client.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -16,8 +17,9 @@ import java.net.URI;
 import java.util.List;
 
 @Controller
-@Slf4j
 public class RequestController {
+    private static final Logger log = LoggerFactory.getLogger(RequestController.class);
+
     private final DiscoveryClient client;
 
     @Autowired

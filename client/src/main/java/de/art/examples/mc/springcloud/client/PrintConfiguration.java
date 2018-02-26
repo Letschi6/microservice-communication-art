@@ -1,14 +1,15 @@
 package de.art.examples.mc.springcloud.client;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
 @Service
-@Slf4j
 public class PrintConfiguration {
+    private static final Logger log = LoggerFactory.getLogger(PrintConfiguration.class);
     @Value("${client.app}")
     private String clientApp;
     @Value("${client.mode}")

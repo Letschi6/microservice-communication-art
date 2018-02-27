@@ -6,7 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.servlet.Filter;
 
 /**
  * Created by redmann on 08.04.16.
@@ -22,5 +26,10 @@ public class Main {
     public static void main(String[] args) {
         log.info("Starting spring cloud zuul server");
         SpringApplication.run(Main.class, args);
+    }
+
+    @Bean
+    public Filter shallowEtagHeaderFilter() {
+        return new ShallowEtagHeaderFilter();
     }
 }

@@ -1,6 +1,6 @@
-package de.art.examples.mc.springcloud.producer.repository;
+package de.art.examples.mc.kafka.consumer.repository;
 
-import de.art.examples.mc.springcloud.producer.domain.Article;
+import de.art.examples.mc.kafka.consumer.domain.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

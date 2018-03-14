@@ -14,10 +14,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
-@Service
-@KafkaListener(topics = "${kafka.stock.topic.id}")
+@Service()
+@KafkaListener(topics = "${kafka.stock.topic.id}", containerFactory = "stockContainerFactory")
 public class StockKafkaConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
@@ -30,15 +28,16 @@ public class StockKafkaConsumer {
 
     @KafkaHandler
     public void listen(@Payload Stock stock) {
-
-        log.warn("Add stock: " + stock.getUuid());
+        log.warn("Update stock: " + stock.getId());
         stockRepository.save(stock);
     }
 
 
     @KafkaHandler
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        log.warn("Delete stock: " + key);
-        stockRepository.delete(UUID.fromString(key));
+        if (stockRepository.exists(key)) {
+            log.warn("Delete stock: " + key);
+            stockRepository.delete(key);
+        }
     }
 }

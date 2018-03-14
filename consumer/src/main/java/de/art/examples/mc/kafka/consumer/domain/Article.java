@@ -1,25 +1,19 @@
 package de.art.examples.mc.kafka.consumer.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.UUID;
-
-@Entity
 public class Article {
-    @Id
-    private UUID uuid = UUID.randomUUID();
+    private String id;
     private String name;
-
 
     public Article() {
     }
 
-    public UUID getUuid() {
-        return uuid;
+
+    public String getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

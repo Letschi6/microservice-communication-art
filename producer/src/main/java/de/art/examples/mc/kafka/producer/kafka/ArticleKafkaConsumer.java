@@ -30,7 +30,7 @@ public class ArticleKafkaConsumer {
     @KafkaHandler
     public void listen(@Payload Article article) {
 
-        log.info("Save article: " + article.getUuid());
+        log.info("Save article: " + article.getId());
         articleRepository.save(article);
     }
 
@@ -38,6 +38,6 @@ public class ArticleKafkaConsumer {
     @KafkaHandler
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         log.info("Delete article: " + key);
-        articleRepository.delete(UUID.fromString(key));
+        articleRepository.delete(key);
     }
 }

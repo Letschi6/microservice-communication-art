@@ -3,7 +3,6 @@ package de.art.examples.mc.kafka.consumer.kafka;
 import de.art.examples.mc.kafka.consumer.Main;
 import de.art.examples.mc.kafka.consumer.domain.Article;
 import de.art.examples.mc.kafka.consumer.domain.Stock;
-import de.art.examples.mc.kafka.consumer.repository.ArticleRepository;
 import de.art.examples.mc.kafka.consumer.repository.StockRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,47 +18,43 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Service
-@KafkaListener(topics = "${kafka.article.topic.id}")
+@KafkaListener(topics = "${kafka.article.topic.id}", containerFactory = "kafkaListenerContainerFactory", groupId = "stock-consumer-article-group")
 public class ArticleKafkaConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-    private final ArticleRepository articleRepository;
     private final StockRepository stockRepository;
-    @Value("${kafka.stock.topic.id}")
-    private String kafkaStockTopicId;
     private final KafkaTemplate<String, Stock> kafkaTemplate;
+    @Value("${kafka.stock.topic.id}")
+    private String stockTopic;
 
     @Autowired
-    public ArticleKafkaConsumer(ArticleRepository articleRepository, StockRepository stockRepository, KafkaTemplate<String, Stock> kafkaTemplate) {
-        this.articleRepository = articleRepository;
+    public ArticleKafkaConsumer(StockRepository stockRepository, KafkaTemplate<String, Stock> kafkaTemplate) {
         this.stockRepository = stockRepository;
         this.kafkaTemplate = kafkaTemplate;
     }
 
     @KafkaHandler
-    public void listen(@Payload Article article) {
-        log.warn("Add article: " + article.getUuid());
-        boolean newArticle = !articleRepository.existsByUuid(article.getUuid());
-        Article savedArticle = articleRepository.save(article);
-        if (newArticle) {
-
-            log.warn("New article: " + article.getUuid());
-            Stock stock = new Stock();
-            stock.setArticle(savedArticle);
+    public void listen(@Payload(required = false) Article article, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
+        Stock stock = stockRepository.findOne(key);
+        if (stock == null) {
+            log.warn("New article detected, add new stock: " + key + " " + article.getName());
+            stock = new Stock();
+            stock.setId(key);
             stock.setAmount(BigDecimal.valueOf(0));
-            kafkaTemplate.send(kafkaStockTopicId, stock.getUuid().toString(), stock);
+            kafkaTemplate.send(stockTopic, key, stock);
         }
     }
 
 
     @KafkaHandler
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        log.warn("Delete article: " + key);
-        stockRepository.delete(UUID.fromString(key));
-        articleRepository.delete(UUID.fromString(key));
+        final Stock stock = stockRepository.findOne(key);
+        if (stock != null) {
+            log.warn("Delete stock by article deletion: " + key);
+            kafkaTemplate.send(stockTopic, key, null);
+        }
     }
 }

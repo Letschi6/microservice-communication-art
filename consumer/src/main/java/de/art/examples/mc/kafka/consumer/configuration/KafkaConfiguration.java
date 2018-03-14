@@ -1,41 +1,67 @@
 package de.art.examples.mc.kafka.consumer.configuration;
 
-import de.art.examples.mc.kafka.consumer.Main;
 import de.art.examples.mc.kafka.consumer.domain.Article;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.art.examples.mc.kafka.consumer.domain.Stock;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.KafkaNull;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-
-import javax.annotation.PostConstruct;
 
 @Configuration
 public class KafkaConfiguration {
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
+//    private final ConsumerFactory defaultKafkaConsumerFactory;
 
-    private final ConsumerFactory defaultKafkaConsumerFactory;
+
+    private final KafkaProperties kafkaProperties;
+
 
     @Autowired
-    public KafkaConfiguration(ConsumerFactory defaultKafkaConsumerFactory) {
-        this.defaultKafkaConsumerFactory = defaultKafkaConsumerFactory;
+    public KafkaConfiguration(KafkaProperties kafkaProperties) {
+        this.kafkaProperties = kafkaProperties;
     }
 
-    //    @Bean
-//    public Map<String, Object> producerConfigs() {
-//        Map<String, Object> props = new HashMap<>();
-//        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-//        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-//
-//        return props;
-//    }
-//
-    @PostConstruct
-    public void consumerFactory() {
-        log.warn("Set DefaultKafkaConsumerFactory");
-        ((DefaultKafkaConsumerFactory) defaultKafkaConsumerFactory).setValueDeserializer(new JsonDeserializer(Article.class));
+
+    @Bean
+    public ConsumerFactory<String, KafkaNull> nullConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new JsonDeserializer<>(KafkaNull.class));
     }
 
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, KafkaNull> nullContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, KafkaNull> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(nullConsumerFactory());
+        return factory;
+    }
+
+
+    @Bean
+    public ConsumerFactory<String, Article> articleConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new JsonDeserializer<>(Article.class));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Article> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Article> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(articleConsumerFactory());
+        return factory;
+    }
+
+
+    @Bean
+    public ConsumerFactory<String, Stock> stockConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new JsonDeserializer<>(Stock.class));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Stock> stockContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Stock> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(stockConsumerFactory());
+        return factory;
+    }
 }

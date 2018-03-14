@@ -32,18 +32,18 @@ public class RestArticleController {
     }
 
 
-    @GetMapping("/{uuid}")
-    public Article getArticleList(@PathVariable UUID uuid) {
-        return articleRepository.findOne(uuid);
+    @GetMapping("/{id}")
+    public Article getArticleList(@PathVariable String id) {
+        return articleRepository.findOne(id);
     }
 
     @PostMapping()
-    public void addArticle(@RequestBody Article article) {
-        kafkaTemplate.send(kafkaArticleTopicId, article.getUuid().toString(), article);
+    public void updateArticle(@RequestBody Article article) {
+        kafkaTemplate.send(kafkaArticleTopicId, article.getId(), article);
     }
 
-    @DeleteMapping("/{uuid}")
-    public void removeArticle(@PathVariable UUID uuid) {
-        kafkaTemplate.send(kafkaArticleTopicId, uuid.toString(), null);
+    @DeleteMapping("/{id}")
+    public void removeArticle(@PathVariable String id) {
+        kafkaTemplate.send(kafkaArticleTopicId, id, null);
     }
 }

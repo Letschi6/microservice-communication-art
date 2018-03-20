@@ -6,7 +6,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-
+article-avro.avro
+article-reflected.avro
 .idea/
 **/*.iml
 **/target

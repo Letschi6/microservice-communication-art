@@ -1,12 +1,16 @@
 package de.art.examples.mc.kafka.producer.domain;
 
-import org.apache.avro.reflect.AvroMeta;
+import org.apache.avro.reflect.AvroAlias;
+import org.apache.avro.reflect.AvroDefault;
+import org.apache.avro.reflect.AvroIgnore;
 import org.apache.avro.reflect.Nullable;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+@AvroAlias(alias = "stuff")
 public class Article {
     private String id = UUID.randomUUID().toString();
     /**
@@ -15,8 +19,12 @@ public class Article {
     private String name;
     @Nullable
     private String description;
-    private BigDecimal price;
-    private List<EAN> eanList;
+    @AvroDefault("\"0.99\"")
+    private BigDecimal price = BigDecimal.valueOf(0.99);
+    @AvroDefault("[]")
+    private List<EAN> eanList = new LinkedList<>();
+    @AvroIgnore
+    private String ignored;
 
 
     public Article() {

@@ -13,9 +13,6 @@ import java.util.UUID;
 @AvroAlias(alias = "stuff")
 public class Article {
     private String id = UUID.randomUUID().toString();
-    /**
-     * Name of the Article
-     */
     private String name;
     @Nullable
     private String description;

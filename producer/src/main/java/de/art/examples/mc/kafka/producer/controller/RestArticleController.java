@@ -6,6 +6,7 @@ import de.art.examples.mc.kafka.producer.domain.ArticleAvro;
 import de.art.examples.mc.kafka.producer.repository.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -44,7 +45,8 @@ public class RestArticleController {
 
     @PostMapping()
     public void updateArticle(@RequestBody Article article) {
-        final ArticleAvro articleAvro = ArticleAvro.newBuilder().setId(article.getId()).setPrice(article.getPrice()).setName(article.getName()).setDescription(article.getDescription()).build();
+        ArticleAvro articleAvro = new ArticleAvro();
+        BeanUtils.copyProperties(article, articleAvro);
         kafkaTemplate.send(kafkaArticleTopicId, article.getId(), articleAvro);
     }
 

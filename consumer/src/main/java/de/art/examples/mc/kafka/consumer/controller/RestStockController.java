@@ -3,6 +3,7 @@ package de.art.examples.mc.kafka.consumer.controller;
 import de.art.examples.mc.kafka.consumer.domain.Stock;
 import de.art.examples.mc.kafka.consumer.domain.StockAvro;
 import de.art.examples.mc.kafka.consumer.repository.StockRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -39,7 +40,8 @@ public class RestStockController {
 
     @PostMapping()
     public void updateStock(@RequestBody Stock stock) {
-        StockAvro stockAvro = StockAvro.newBuilder().setId(stock.getId()).setAmount(stock.getAmount()).build();
+        StockAvro stockAvro = new StockAvro();
+        BeanUtils.copyProperties(stock, stockAvro);
         kafkaTemplate.send(kafkaStockTopicId, stock.getId(), stockAvro);
     }
 }

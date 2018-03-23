@@ -5,6 +5,7 @@ import de.art.examples.mc.kafka.producer.domain.ArticleAvro;
 import de.art.examples.mc.kafka.producer.repository.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -31,10 +32,7 @@ public class ArticleKafkaConsumer {
 
         log.info("Save article: " + articleAvro.getId());
         Article article = new Article();
-        article.setId(articleAvro.getId());
-        article.setPrice(articleAvro.getPrice());
-        article.setName(articleAvro.getName());
-        article.setDescription(articleAvro.getDescription());
+        BeanUtils.copyProperties(articleAvro, article);
         articleRepository.save(article);
     }
 

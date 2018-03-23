@@ -6,6 +6,7 @@ import de.art.examples.mc.kafka.consumer.domain.StockAvro;
 import de.art.examples.mc.kafka.consumer.repository.StockRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -30,9 +31,9 @@ public class StockKafkaConsumer {
     @KafkaHandler
     public void listen(@Payload StockAvro stockAvro) {
         log.warn("Update stock: " + stockAvro.getId());
+
         Stock stock = new Stock();
-        stock.setId(stockAvro.getId());
-        stock.setAmount(stockAvro.getAmount());
+        BeanUtils.copyProperties(stockAvro, stock);
         stockRepository.save(stock);
     }
 

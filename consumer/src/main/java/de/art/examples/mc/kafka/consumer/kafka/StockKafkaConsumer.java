@@ -2,6 +2,7 @@ package de.art.examples.mc.kafka.consumer.kafka;
 
 import de.art.examples.mc.kafka.consumer.Main;
 import de.art.examples.mc.kafka.consumer.domain.Stock;
+import de.art.examples.mc.kafka.consumer.domain.StockAvro;
 import de.art.examples.mc.kafka.consumer.repository.StockRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 @Service()
-@KafkaListener(topics = "${kafka.stock.topic.id}", containerFactory = "stockContainerFactory")
+@KafkaListener(topics = "${kafka.stock.topic.id}")
 public class StockKafkaConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
@@ -27,8 +28,11 @@ public class StockKafkaConsumer {
     }
 
     @KafkaHandler
-    public void listen(@Payload Stock stock) {
-        log.warn("Update stock: " + stock.getId());
+    public void listen(@Payload StockAvro stockAvro) {
+        log.warn("Update stock: " + stockAvro.getId());
+        Stock stock = new Stock();
+        stock.setId(stockAvro.getId());
+        stock.setAmount(stockAvro.getAmount());
         stockRepository.save(stock);
     }
 

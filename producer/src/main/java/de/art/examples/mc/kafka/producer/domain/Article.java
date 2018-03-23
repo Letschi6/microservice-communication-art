@@ -1,5 +1,9 @@
 package de.art.examples.mc.kafka.producer.domain;
 
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericContainer;
+import org.apache.avro.reflect.ReflectData;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;

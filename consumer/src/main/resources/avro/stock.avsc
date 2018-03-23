@@ -1,0 +1,15 @@
+{
+  "type" : "record",
+  "name" : "StockAvro",
+  "namespace" : "de.art.examples.mc.kafka.consumer.domain",
+  "fields" : [ {
+    "name" : "id",
+    "type" : "string"
+  }, {
+    "name" : "amount",
+    "type" : {
+      "type" : "string",
+      "java-class" : "java.math.BigDecimal"
+    }
+  } ]
+}

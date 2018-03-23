@@ -1,0 +1,21 @@
+{
+  "type" : "record",
+  "name" : "ArticleAvro",
+  "namespace" : "de.art.examples.mc.kafka.producer.domain",
+  "fields" : [ {
+    "name" : "id",
+    "type" : "string"
+  }, {
+    "name" : "name",
+    "type" : "string"
+  }, {
+    "name" : "description",
+    "type" : "string"
+  }, {
+    "name" : "price",
+    "type" : {
+      "type" : "string",
+      "java-class" : "java.math.BigDecimal"
+    }
+  } ]
+}

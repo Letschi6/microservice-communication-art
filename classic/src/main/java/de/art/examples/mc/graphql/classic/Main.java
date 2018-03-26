@@ -1,4 +1,4 @@
-package de.art.examples.mc.kafka.producer;
+package de.art.examples.mc.graphql.classic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

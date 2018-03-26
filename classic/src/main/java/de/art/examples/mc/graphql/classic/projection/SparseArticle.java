@@ -1,6 +1,6 @@
-package de.art.examples.mc.kafka.producer.projection;
+package de.art.examples.mc.graphql.classic.projection;
 
-import de.art.examples.mc.kafka.producer.domain.Article;
+import de.art.examples.mc.graphql.classic.domain.Article;
 import org.springframework.data.rest.core.config.Projection;
 
 import java.math.BigDecimal;

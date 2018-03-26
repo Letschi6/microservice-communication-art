@@ -1,4 +1,4 @@
-package de.art.examples.mc.kafka.producer.domain;
+package de.art.examples.mc.graphql.classic.domain;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

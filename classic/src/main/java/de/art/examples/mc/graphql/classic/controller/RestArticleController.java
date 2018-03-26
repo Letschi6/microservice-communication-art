@@ -1,9 +1,9 @@
-package de.art.examples.mc.kafka.producer.controller;
+package de.art.examples.mc.graphql.classic.controller;
 
-import de.art.examples.mc.kafka.producer.Main;
-import de.art.examples.mc.kafka.producer.domain.Article;
-import de.art.examples.mc.kafka.producer.projection.SparseArticle;
-import de.art.examples.mc.kafka.producer.repository.ArticleRepository;
+import de.art.examples.mc.graphql.classic.Main;
+import de.art.examples.mc.graphql.classic.domain.Article;
+import de.art.examples.mc.graphql.classic.projection.SparseArticle;
+import de.art.examples.mc.graphql.classic.repository.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

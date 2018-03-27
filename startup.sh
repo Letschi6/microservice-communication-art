@@ -16,6 +16,6 @@ java -Dspring.application.name=eureka-client-operand -jar client-response/target
 java -Dspring.application.name=eureka-client-operator -jar client-response/target/client-response-1.0.0-SNAPSHOT.jar &
 sleep 30
 java -Dspring.application.name=eureka-client-root -jar client-request/target/client-request-1.0.0-SNAPSHOT.jar &
-sleep 30
-#java -jar zuul-server/target/zuul-server-1.0.0-SNAPSHOT.jar &
+sleep 60
+java -jar zuul-server/target/zuul-server-1.0.0-SNAPSHOT.jar &
 read -p "Press enter to continue"

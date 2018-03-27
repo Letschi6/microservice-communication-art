@@ -1,0 +1,18 @@
+type Article {
+    id: ID!
+    name: String!
+    description: String!
+    price: BigDecimal
+    eanList: [String]!
+}
+
+type Query {
+    findAllArticles: [Article]!
+    countArticles: Long!
+}
+
+type Mutation {
+    newArticle(name: String!, price: BigDecimal!, eanList: [String]!): Article!
+    updateArticle (articleId: ID!, name: String, price: BigDecimal, eanList: [String]): Article!
+    deleteArticle(id: ID!) : Boolean
+}

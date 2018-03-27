@@ -10,5 +10,6 @@
 
     <modules>
         <module>classic</module>
+        <module>graphql-service</module>
     </modules>
 </project>

@@ -4,12 +4,18 @@ type Stock {
     article: Article!
 }
 
+input StockInput {
+    articleId: ID!
+    amount: BigDecimal!
+}
+
 extend type Query {
     findAllStocks: [Stock]!
     countStocks: Long!
 }
 
 extend type Mutation {
+    newStockWithInput(stockInput: StockInput!): Stock!
     newStock(articleId: ID!): Stock!
     updateStock (stockId: ID!, amount: BigDecimal!): Stock!
     deleteStock(id: ID!) : Boolean

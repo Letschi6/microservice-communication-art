@@ -49,6 +49,15 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
+    public Stock newStockWithInput(StockInput stockInput) {
+        Article article = articleRepository.findOne(stockInput.getArticleId());
+        Stock stock = new Stock();
+        stock.setArticle(article);
+        stock.setAmount(stockInput.getAmount());
+        return stockRepository.save(stock);
+    }
+
+
     public Stock newStock(String articleId) {
         Article article = articleRepository.findOne(articleId);
         Stock stock = new Stock();

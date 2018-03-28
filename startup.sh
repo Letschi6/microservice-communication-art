@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 mvn clean package
 trap 'kill $(jobs -p)' SIGINT
-~/tools/kafka_2.12-1.0.0/bin/zookeeper-server-start.sh ~/tools/kafka_2.12-1.0.0/config/zookeeper.properties &
+~/tools/kafka_2.12-1.0.1/bin/zookeeper-server-start.sh ~/tools/kafka_2.12-1.0.1/config/zookeeper.properties &
 sleep 10
-~/tools/kafka_2.12-1.0.0/bin/kafka-server-start.sh ~/tools/kafka_2.12-1.0.0/config/server.properties &
+~/tools/kafka_2.12-1.0.1/bin/kafka-server-start.sh ~/tools/kafka_2.12-1.0.1/config/server.properties &
 sleep 10
 java -jar config-server/target/config-server-1.0.0-SNAPSHOT.jar &
 sleep 15

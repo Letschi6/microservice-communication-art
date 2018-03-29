@@ -42,8 +42,8 @@ public class RequestController {
 
     private String getPart(String service) {
         ServiceInstance instance = loadBalancer.choose(service);
-        URI uri = instance.getUri();
-        if (uri != null) {
+        if (instance != null && instance.getUri() != null) {
+            URI uri = instance.getUri();
             log.info("Request load balanced service: " + service + " with uri: " + uri.toString());
             return (new RestTemplate()).getForObject(uri, String.class);
         }

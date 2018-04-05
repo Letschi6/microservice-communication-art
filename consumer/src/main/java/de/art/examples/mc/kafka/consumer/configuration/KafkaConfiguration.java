@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.KafkaNull;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 @Configuration
@@ -24,19 +23,6 @@ public class KafkaConfiguration {
     @Autowired
     public KafkaConfiguration(KafkaProperties kafkaProperties) {
         this.kafkaProperties = kafkaProperties;
-    }
-
-
-    @Bean
-    public ConsumerFactory<String, KafkaNull> nullConsumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties(), new StringDeserializer(), new JsonDeserializer<>(KafkaNull.class));
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, KafkaNull> nullContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, KafkaNull> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(nullConsumerFactory());
-        return factory;
     }
 
 

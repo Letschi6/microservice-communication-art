@@ -13,8 +13,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @KafkaListener(topics = "${kafka.article.topic.id}", containerFactory = "kafkaListenerContainerFactory")
 public class ArticleKafkaConsumer {
@@ -38,6 +36,8 @@ public class ArticleKafkaConsumer {
     @KafkaHandler
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         log.info("Delete article: " + key);
-        articleRepository.delete(key);
+        if (articleRepository.exists(key)) {
+            articleRepository.delete(key);
+        }
     }
 }

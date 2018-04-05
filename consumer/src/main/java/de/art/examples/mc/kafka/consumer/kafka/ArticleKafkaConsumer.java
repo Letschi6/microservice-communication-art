@@ -38,10 +38,9 @@ public class ArticleKafkaConsumer {
 
     @KafkaHandler
     public void listen(@Payload(required = false) Article article, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        Stock stock = stockRepository.findOne(key);
-        if (stock == null) {
+        if (!stockRepository.exists(key)) {
             log.warn("New article detected, add new stock: " + key + " " + article.getName());
-            stock = new Stock();
+            Stock stock = new Stock();
             stock.setId(key);
             stock.setAmount(BigDecimal.valueOf(0));
             kafkaTemplate.send(stockTopic, key, stock);
@@ -51,8 +50,7 @@ public class ArticleKafkaConsumer {
 
     @KafkaHandler
     public void delete(@Payload(required = false) KafkaNull nul, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
-        final Stock stock = stockRepository.findOne(key);
-        if (stock != null) {
+        if (stockRepository.exists(key)) {
             log.warn("Delete stock by article deletion: " + key);
             kafkaTemplate.send(stockTopic, key, null);
         }

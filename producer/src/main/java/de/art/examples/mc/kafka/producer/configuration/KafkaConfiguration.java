@@ -15,8 +15,6 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 @Configuration
 public class KafkaConfiguration {
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
-
     private final KafkaProperties kafkaProperties;
 
     public KafkaConfiguration(KafkaProperties kafkaProperties) {
@@ -35,18 +33,4 @@ public class KafkaConfiguration {
         factory.setConsumerFactory(articleConsumerFactory());
         return factory;
     }
-
-//    private final ConsumerFactory defaultKafkaConsumerFactory;
-//
-//    @Autowired
-//    public KafkaConfiguration(ConsumerFactory defaultKafkaConsumerFactory) {
-//        this.defaultKafkaConsumerFactory = defaultKafkaConsumerFactory;
-//    }
-//
-//    @PostConstruct
-//    public void consumerFactory() {
-//        log.warn("Set DefaultKafkaConsumerFactory");
-//        ((DefaultKafkaConsumerFactory) defaultKafkaConsumerFactory).setValueDeserializer(new JsonDeserializer(Article.class));
-//    }
-
 }

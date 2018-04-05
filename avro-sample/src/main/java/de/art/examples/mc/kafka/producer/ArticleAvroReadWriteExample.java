@@ -3,6 +3,8 @@ package de.art.examples.mc.kafka.producer;
 import de.art.examples.mc.kafka.producer.domain.ArticleAvro;
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.DataFileWriter;
+import org.apache.avro.generic.GenericDatumReader;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.specific.SpecificDatumReader;
@@ -20,6 +22,14 @@ import java.util.UUID;
 public class ArticleAvroReadWriteExample {
 
     public static void main(String[] args) {
+        writeSpecificDataToFile();
+        readSpecificDataFromFile();
+        readGenericDataFromFile();
+
+
+    }
+
+    private static void writeSpecificDataToFile() {
         final ArticleAvro.Builder articleBuilder = ArticleAvro.newBuilder();
         articleBuilder.setId(UUID.randomUUID().toString());
         articleBuilder.setName("Article 1");
@@ -38,15 +48,15 @@ public class ArticleAvroReadWriteExample {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-
+    private static void readSpecificDataFromFile() {
         // read it from a file
         final File file = new File("article-avro.avro");
         final DatumReader<ArticleAvro> datumReader = new SpecificDatumReader<>(ArticleAvro.class);
-        final DataFileReader<ArticleAvro> dataFileReader;
         try {
-            System.out.println("Reading record");
-            dataFileReader = new DataFileReader<>(file, datumReader);
+            System.out.println("\nReading specific record");
+            final DataFileReader<ArticleAvro> dataFileReader = new DataFileReader<>(file, datumReader);
             while (dataFileReader.hasNext()) {
                 ArticleAvro readArticle = dataFileReader.next();
                 System.out.println(readArticle.toString());
@@ -55,7 +65,24 @@ public class ArticleAvroReadWriteExample {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private static void readGenericDataFromFile() {
+        // read generic it from a file
+        final File file = new File("article-avro.avro");
+        final DatumReader<GenericRecord> genericDatumReader = new GenericDatumReader<>();
+        try (DataFileReader<GenericRecord> genericRecordDataFileReader = new DataFileReader<>(file, genericDatumReader)) {
+            GenericRecord genericArticleRead = genericRecordDataFileReader.next();
+            System.out.println("\nRead generic record");
+            System.out.println(genericArticleRead.toString());
 
+            // get the data from the generic record
+            System.out.println("First name: " + genericArticleRead.get("name"));
+
+            // read a non existent field
+            System.out.println("Non existent field: " + genericArticleRead.get("not_here"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -33,21 +33,11 @@ public class ArticleToSchemaViaReflectionExample {
         article.getEanList().add(ean);
 
 
-        // create a file of ReflectedCustomers
-        try {
-            System.out.println("Writing article-reflected.avro");
-            File file = new File("article-reflected.avro");
-            DatumWriter<Article> writer = new ReflectDatumWriter<>(Article.class);
-            DataFileWriter<Article> out = new DataFileWriter<>(writer)
-                    .setCodec(CodecFactory.deflateCodec(9))
-                    .create(schema, file);
+        writeArticleToFile(schema, article);
+        readArticleFromFile();
+    }
 
-            out.append(article);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private static void readArticleFromFile() {
         // read from an avro into our Reflected class
         // open a file of ReflectedCustomers
         try {
@@ -65,6 +55,22 @@ public class ArticleToSchemaViaReflectionExample {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private static void writeArticleToFile(Schema schema, Article article) {
+        // create a file of ReflectedCustomers
+        try {
+            System.out.println("Writing article-reflected.avro");
+            File file = new File("article-reflected.avro");
+            DatumWriter<Article> writer = new ReflectDatumWriter<>(Article.class);
+            DataFileWriter<Article> out = new DataFileWriter<>(writer)
+                    .setCodec(CodecFactory.deflateCodec(9))
+                    .create(schema, file);
+
+            out.append(article);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

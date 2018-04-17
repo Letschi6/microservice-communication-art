@@ -9,6 +9,5 @@ sleep 20
 ~/tools/confluent-4.0.0/bin/schema-registry-start  ~/tools/confluent-4.0.0/etc/schema-registry/schema-registry.properties
 sleep 20
 mvn clean package
-java -jar producer/target/producer-1.0.0-SNAPSHOT.jar
 
 read -p "Press enter to continue"

@@ -10,7 +10,5 @@ sleep 20
 sleep 20
 mvn clean package
 java -jar producer/target/producer-1.0.0-SNAPSHOT.jar
-java -jar consumer/target/consumer-1.0.0-SNAPSHOT.jar
-java -jar consumer/target/consumer-1.0.0-SNAPSHOT.jar -Dserver.port=8201
 
 read -p "Press enter to continue"

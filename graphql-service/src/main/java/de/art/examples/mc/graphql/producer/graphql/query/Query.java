@@ -21,7 +21,6 @@ public class Query implements GraphQLQueryResolver {
         return articleRepository.findAll();
     }
 
-
     public long countArticles() {
         return articleRepository.count();
     }
@@ -29,7 +28,6 @@ public class Query implements GraphQLQueryResolver {
     public Iterable<Stock> findAllStocks() {
         return stockRepository.findAll();
     }
-
 
     public long countStocks() {
         return stockRepository.count();

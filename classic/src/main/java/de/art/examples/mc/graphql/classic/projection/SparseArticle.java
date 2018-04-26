@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 
 @Projection(name = "SparseArticle", types = {Article.class})
 public interface SparseArticle {
-    public String getId();
+    String getId();
 
-    public String getName();
+    String getName();
 
-    public String getDescription();
+    String getDescription();
 
-    public BigDecimal getPrice();
+    BigDecimal getPrice();
 }
